@@ -1,16 +1,18 @@
+from typing import List, Optional
+
+
 class Cargo:
     def __init__(self, weight: int) -> None:
         self.weight = weight
 
 
 class BaseRobot:
-    def __init__(self, name: str, weight: int, coords: list | None = None) \
-            -> None:
+    def __init__(self,
+                 name: str, weight: int,
+                 coords: Optional[list[int]] = None) -> None:
         self.name = name
         self.weight = weight
-        if coords is None:
-            coords = [0, 0]
-            self.coords = coords
+        self.coords: List[int] = coords if coords is not None else [0, 0]
 
     def go_forward(self, step: int = 1) -> None:
         """Move na direção Y positiva (forward)"""
@@ -54,12 +56,12 @@ class DeliveryDrone(FlyingRobot):
     def __init__(self,
                  name: str,
                  weight: int,
-                 coords: list | None = None,
+                 coords: Optional[List[int]] = None,
                  max_load_weight: int | float = 0,
-                 current_load: Cargo | None = None) -> None:
+                 current_load: Optional[Cargo] = None) -> None:
         super().__init__(name, weight, coords)
         self.max_load_weight = max_load_weight
-        self.current_load: Cargo | None = None
+        self.current_load: Optional[Cargo] = None
         if current_load is not None:
             self.hook_load(current_load)
 
