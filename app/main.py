@@ -7,9 +7,7 @@ class BaseRobot:
         self.name = name
         self.weight = weight
         if coords is None:
-            self.coords = [0, 0]
-        else:
-            self.coords = coords
+            self.coords = coords or [0, 0]
 
     def go_forward(self, step: int = 1) -> None:
         """Move na direção Y positiva (forward)"""
@@ -39,7 +37,7 @@ class FlyingRobot(BaseRobot):
             coords_normalized = coords + [0]
         else:
             coords_normalized = coords
-        super().init(name, weight, coords_normalized)
+        super().__init__(name, weight, coords_normalized)
 
     def go_up(self, step: int = 1) -> None:
         self.coords[2] += step
@@ -52,7 +50,7 @@ class DeliveryDrone(FlyingRobot):
     def __init__(self, name: str, weight: int, coords: list | None = None,
                  max_load_weight: int | float = 0,
                  current_load: Cargo |  None = None) -> None:
-        super().init(name, weight, coords)
+        super().__init__(name, weight, coords)
         self.max_load_weight = max_load_weight
         self.current_load: Cargo | None = None
         if current_load is not None:
